@@ -146,13 +146,17 @@ class KerningProxy(Proxy, BaseKerning):
 	def _convertKeys(self, keys):
 		firstKey, secondKey = keys
 		if firstKey[0] != "@":
-			firstKey = self._owner._font.glyphForName_(firstKey).id
+			firstKey = self._owner._font.glyphForName_(firstKey)
 			if firstKey == None:
 				raise KeyError, "glyph with name %s not found" % keys[0]
+			else:
+				firstKey = firstKey.id
 		if secondKey[0] != "@":
-			secondKey = self._owner._font.glyphForName_(secondKey).id
+			secondKey = self._owner._font.glyphForName_(secondKey)
 			if secondKey == None:
 				raise KeyError, "glyph with name %s not found" % keys[1]
+			else:
+				secondKey = secondKey.id
 		return (firstKey, secondKey)
 	def __getitem__(self, keys):
 		if (type(keys) == list or type(keys) == tuple) and len(keys) == 2:
